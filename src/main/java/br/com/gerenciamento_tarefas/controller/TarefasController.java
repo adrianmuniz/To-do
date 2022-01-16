@@ -88,6 +88,8 @@ public class TarefasController {
 	@GetMapping("/tarefas/filter")
 	public ResponseEntity<List<Tarefas>> filtrarPendentes(@RequestParam(name="status", required=true) String status){
 		
+		status = "pendente";
+		
 		List<Tarefas> retorno = dao.findByStatusLike(status);
 		if(retorno.size()==0) {
 			return ResponseEntity.status(404).build();
