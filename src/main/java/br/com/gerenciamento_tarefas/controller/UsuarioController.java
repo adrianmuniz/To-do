@@ -2,11 +2,14 @@ package br.com.gerenciamento_tarefas.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gerenciamento_tarefas.dao.UsuarioDAO;
+import br.com.gerenciamento_tarefas.entities.Tarefas;
 import br.com.gerenciamento_tarefas.entities.Usuario;
 
 @RestController
@@ -39,4 +42,15 @@ public class UsuarioController {
 		
 		return ResponseEntity.ok(logar);
 	}
+	
+	@GetMapping("/usuario/{cod}")
+	public ResponseEntity<Usuario> usuarioPorId(@PathVariable long cod){
+		
+		Usuario user = dao.findById(cod).orElse(null);
+		if(user==null) {
+			return ResponseEntity.status(404).build();
+		}
+		return ResponseEntity.ok(user);
+	}
+	
 }
