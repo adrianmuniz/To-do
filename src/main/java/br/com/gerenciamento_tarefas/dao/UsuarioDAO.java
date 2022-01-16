@@ -6,4 +6,5 @@ import br.com.gerenciamento_tarefas.entities.Usuario;
 
 public interface UsuarioDAO extends CrudRepository<Usuario, Long>{
 
+	public Usuario findByEmailAndSenha(String email, String senha);
 }
