@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gerenciamento_tarefas.dao.TarefasDAO;
 import br.com.gerenciamento_tarefas.entities.Tarefas;
+import br.com.gerenciamento_tarefas.entities.TarefasDTO;
 
 @RestController
 public class TarefasController {
@@ -86,7 +87,15 @@ public class TarefasController {
 	}
 	
 	@GetMapping("/tarefas/filter")
-	public ResponseEntity<List<Tarefas>> filtrarPendentes(@RequestParam(name="status", required=true) String status){
+	public ResponseEntity<List<Tarefas>> filtrarPendentes(@RequestParam(name="status", required=true) String status, @RequestParam(name="prioridades", required=false) String prioridades){
+		
+		if(prioridades != null) {
+			List<Tarefas> retorno = dao.findByPrioridadesLike(prioridades);
+			if(retorno.size()==0) {
+				return ResponseEntity.status(404).build();
+			}
+			return ResponseEntity.ok(retorno);
+		}
 		
 		status = "pendente";
 		
@@ -94,7 +103,7 @@ public class TarefasController {
 		if(retorno.size()==0) {
 			return ResponseEntity.status(404).build();
 		}
-		return ResponseEntity.ok(retorno);	
+		return ResponseEntity.ok(retorno);
+		
 		}
-	
 }

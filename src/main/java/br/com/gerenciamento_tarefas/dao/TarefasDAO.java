@@ -9,4 +9,6 @@ import br.com.gerenciamento_tarefas.entities.Tarefas;
 public interface TarefasDAO extends CrudRepository<Tarefas, Long>{
 
 	public List<Tarefas> findByStatusLike(String status);
+	
+	public List<Tarefas> findByPrioridadesLike(String prioridades);
 }
