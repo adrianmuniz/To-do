@@ -2,6 +2,7 @@ package br.com.gerenciamento_tarefas.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gerenciamento_tarefas.dao.UsuarioDAO;
-import br.com.gerenciamento_tarefas.entities.Tarefas;
 import br.com.gerenciamento_tarefas.entities.Usuario;
 
 @RestController
@@ -17,10 +17,17 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioDAO dao;
+	private final PasswordEncoder encoder;
 	
+	public UsuarioController(UsuarioDAO dao, PasswordEncoder encoder) {
+		this.dao = dao;
+		this.encoder = encoder;
+	}
+
 	@PostMapping("/criarUsuario")
 	public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario){
 		try {
+			usuario.setSenha(encoder.encode(usuario.getSenha()));
 			dao.save(usuario);
 			
 			return ResponseEntity.ok(usuario);

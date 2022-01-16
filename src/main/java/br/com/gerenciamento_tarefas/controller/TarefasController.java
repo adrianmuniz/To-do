@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gerenciamento_tarefas.dao.TarefasDAO;
 import br.com.gerenciamento_tarefas.entities.Tarefas;
-import br.com.gerenciamento_tarefas.entities.TarefasDTO;
+
 
 @RestController
 public class TarefasController {
