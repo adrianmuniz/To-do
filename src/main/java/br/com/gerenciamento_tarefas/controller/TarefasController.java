@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,5 +51,24 @@ public class TarefasController {
 			return ResponseEntity.status(404).build();
 		}
 		return ResponseEntity.ok(tarefa);
+	}
+	
+	@DeleteMapping("/tarefas/{id}")
+	public ResponseEntity<Tarefas> deleteTarefa(@PathVariable long id){
+		try {
+			Tarefas tarefa = dao.findById(id).orElse(null);
+			if(tarefa==null) {
+				return ResponseEntity.status(404).build();
+			}
+			else {
+				dao.delete(tarefa);
+				
+				return ResponseEntity.ok(tarefa);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(403).build();
+		}
 	}
 }
