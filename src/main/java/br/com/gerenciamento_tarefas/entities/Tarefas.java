@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +23,9 @@ public class Tarefas {
 	@Column(name="prioridades")
 	private String prioridades;
 
+	@ManyToOne
+	private Usuario usuario;
+	
 	public long getId() {
 		return id;
 	}
@@ -44,6 +48,14 @@ public class Tarefas {
 
 	public void setPrioridades(String prioridades) {
 		this.prioridades = prioridades;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	

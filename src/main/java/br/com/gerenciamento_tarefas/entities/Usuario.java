@@ -1,10 +1,14 @@
 package br.com.gerenciamento_tarefas.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +29,10 @@ public class Usuario {
 	@Column(name="senha", nullable = true)
 	private String senha;
 
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	private List<Tarefas> tarefa;
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -55,6 +63,14 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public List<Tarefas> getTarefa() {
+		return tarefa;
+	}
+
+	public void setTarefa(List<Tarefas> tarefa) {
+		this.tarefa = tarefa;
 	}
 	
 	
