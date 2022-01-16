@@ -22,6 +22,9 @@ public class Tarefas {
 	
 	@Column(name="prioridades")
 	private String prioridades;
+	
+	@Column(name="status")
+	private String status = "pendente";
 
 	@ManyToOne
 	private Usuario usuario;
@@ -57,7 +60,12 @@ public class Tarefas {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	
-	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

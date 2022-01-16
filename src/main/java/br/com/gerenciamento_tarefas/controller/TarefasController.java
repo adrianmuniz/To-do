@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +21,8 @@ public class TarefasController {
 	@Autowired
 	private TarefasDAO dao;
 	
-	@PostMapping("/criarTarefa")
-	public ResponseEntity<Tarefas> criarTarefa (@RequestBody Tarefas tarefa){
+	@PostMapping("/salvarTarefa")
+	public ResponseEntity<Tarefas> Tarefa (@RequestBody Tarefas tarefa){
 		try {
 			dao.save(tarefa);
 			
@@ -71,4 +72,16 @@ public class TarefasController {
 			return ResponseEntity.status(403).build();
 		}
 	}
+	
+	@PutMapping(value="/tarefas/{id}")
+	public ResponseEntity<Tarefas> tarefaConcluida (@PathVariable long id,@RequestBody Tarefas tarefa){
+		
+		return dao.findById(id)
+				.map(record -> {
+					record.setStatus(tarefa.getStatus());
+					Tarefas update = dao.save(record);
+					return ResponseEntity.ok().body(update);
+				}).orElse(ResponseEntity.notFound().build());
+	}
+	
 }
