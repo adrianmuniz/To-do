@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gerenciamento_tarefas.dao.TarefasDAO;
@@ -83,5 +84,15 @@ public class TarefasController {
 					return ResponseEntity.ok().body(update);
 				}).orElse(ResponseEntity.notFound().build());
 	}
+	
+	@GetMapping("/tarefas/filter")
+	public ResponseEntity<List<Tarefas>> filtrarPendentes(@RequestParam(name="status", required=true) String status){
+		
+		List<Tarefas> retorno = dao.findByStatusLike(status);
+		if(retorno.size()==0) {
+			return ResponseEntity.status(404).build();
+		}
+		return ResponseEntity.ok(retorno);	
+		}
 	
 }
