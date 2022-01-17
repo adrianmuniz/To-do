@@ -42,18 +42,6 @@ public class UsuarioController {
 		}
 	}
 	
-	//@PostMapping("/login")
-	//public ResponseEntity<Usuario> login (@RequestBody Usuario usuario){
-		
-		//Usuario logar = dao.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
-		
-		//if(logar == null) {
-			//return ResponseEntity.status(404).build();
-		//}
-		
-		//return ResponseEntity.ok(logar);
-	//}
-	
 	@GetMapping("/usuario/{cod}")
 	public ResponseEntity<Usuario> usuarioPorId(@PathVariable long cod){
 		
@@ -63,6 +51,17 @@ public class UsuarioController {
 		}
 		return ResponseEntity.ok(user);
 	}
+	
+	@GetMapping("/usuarios/listarTodos")
+	public ResponseEntity<Usuario> todosUsuarios(@PathVariable long cod){
+		
+		Usuario user = (Usuario) dao.findAll();
+		if(user==null) {
+			return ResponseEntity.status(404).build();
+		}
+		return ResponseEntity.ok(user);
+	}
+	
 	
 	@GetMapping("/usuarios/validarsenha")
 	public ResponseEntity<Boolean> validarSenha(@RequestParam String email, @RequestParam String senha){
